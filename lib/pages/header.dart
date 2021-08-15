@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:movie_ui/base_config.dart';
 
@@ -83,7 +82,6 @@ class HeaderWithSearchBox extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SvgPicture.asset("assets/icons/search.svg"),
                 ],
               ),
             ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:movie_ui/base_config.dart';
 import 'package:movie_ui/model/movie.dart';
 import 'package:movie_ui/service/api_service.dart';
+import 'package:movie_ui/pages/anime_player.dart';
 import 'package:http/http.dart' as http;
 
 class DetailMoviePage extends StatefulWidget {
@@ -67,7 +68,6 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
             }
             // var genre = snapshot.data['genre_list'];
             var genres = genre.map((item) => item['genre_name']).join(", ");
-            print(snapshot.data);
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,9 +189,8 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => DetailMoviePage(
-                                        endpoint,
-                                      ),
+                                      builder: (context) => AnimePlayer(snapshot
+                                          .data['episode_list'][index]['id']),
                                     ),
                                   );
                                 },

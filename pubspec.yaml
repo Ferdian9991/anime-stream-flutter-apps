@@ -23,14 +23,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_svg: ^0.19.1 #it helps us to use SVG
+  # flutter_svg: ^0.19.1 #it helps us to use SVG
   http: ^0.13.3
   dio: ^4.0.0
   flutter_bloc: ^7.1.0
   equatable: ^2.0.3
   carousel_slider: ^4.0.0
   flutter_swiper: ^1.1.6
-  videos_player: ^0.1.3
+  better_player: ^0.0.72
 
 dev_dependencies:
   flutter_test:
