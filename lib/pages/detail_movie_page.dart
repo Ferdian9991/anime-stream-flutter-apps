@@ -164,6 +164,69 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                       ),
                     ),
                   ),
+                  FutureBuilder(
+                    future: getAnimeDetails(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Container(
+                          height: 41,
+                          margin: EdgeInsets.only(
+                            top: 2,
+                            bottom: 15,
+                            right: 15,
+                            left: 15,
+                          ),
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: snapshot.data['episode_list'].length,
+                            itemBuilder: (context, index) {
+                              // var length = snapshot.data[index]['id'].length;
+                              // var endpoint = snapshot.data[index]['id']
+                              //     .substring(0, length - 1);
+                              var episodeList = snapshot.data['episode_list'];
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => DetailMoviePage(
+                                        endpoint,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(10),
+                                  margin: EdgeInsets.only(right: 7),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.black),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(25))),
+                                  child: Text(
+                                    episodeList[index]['title'].substring(
+                                        episodeList[index]['title']
+                                            .indexOf("Episode"),
+                                        episodeList[index]['title']
+                                            .indexOf("Subtitle")),
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      } else {
+                        return Container(
+                          height: 41,
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      }
+                    },
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(left: 15),
                     child: Text(

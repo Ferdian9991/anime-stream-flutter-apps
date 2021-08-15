@@ -28,15 +28,20 @@ class _DetailGenrePageState extends State<DetailGenre> {
       return value['animeList'];
     }
 
+    var length = widget.genre.toUpperCase().length;
+    var capitalize = widget.genre.toUpperCase().substring(0, 1);
+    var titleLower = widget.genre.substring(1, length);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: secondaryColor,
         iconTheme: IconThemeData(color: Colors.black),
         elevation: 0,
+        centerTitle: true,
         title: Row(
           children: [
             Text(
-              "F",
+              capitalize,
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 22,
@@ -44,9 +49,9 @@ class _DetailGenrePageState extends State<DetailGenre> {
               ),
             ),
             Text(
-              "Nime",
+              titleLower,
               style: TextStyle(
-                color: primaryColor,
+                color: Colors.black,
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
