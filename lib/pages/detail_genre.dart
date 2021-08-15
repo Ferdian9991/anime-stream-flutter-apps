@@ -25,7 +25,6 @@ class _DetailGenrePageState extends State<DetailGenre> {
     Future getAnimeGenre() async {
       var response = await http.get(Uri.parse(url));
       var value = json.decode(response.body);
-      print(value['animeList']);
       return value['animeList'];
     }
 

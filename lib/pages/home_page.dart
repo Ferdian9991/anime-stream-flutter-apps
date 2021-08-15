@@ -223,7 +223,6 @@ class _HomeState extends State<HomeView> {
                       var length = snapshot.data[index]['id'].length;
                       var endpoint =
                           snapshot.data[index]['id'].substring(0, length - 1);
-                      print(endpoint);
                       return GestureDetector(
                         onTap: () {
                           Navigator.push(
