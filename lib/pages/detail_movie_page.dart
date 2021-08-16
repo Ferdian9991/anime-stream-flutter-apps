@@ -168,6 +168,7 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                     future: getAnimeDetails(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
+                        var sinopsis = snapshot.data['synopsis'];
                         return Container(
                           height: 41,
                           margin: EdgeInsets.only(
@@ -205,9 +206,17 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                                         return FutureBuilder(
                                           future: getAnimeEps(),
                                           builder: (context, snapshot) {
+                                            final String name = "";
+                                            final String link = "";
+                                            final String synopsis = "";
+                                            print(snapshot.data);
                                             if (snapshot.hasData) {
                                               return AnimePlayer(
-                                                  snapshot.data['link_stream']);
+                                                name: snapshot.data['title'],
+                                                eps: snapshot
+                                                    .data['link_stream'],
+                                                synopsis: sinopsis,
+                                              );
                                             } else {
                                               return Center(
                                                 child:

@@ -6,8 +6,10 @@ import 'package:video_player/video_player.dart';
 
 class AnimePlayer extends StatefulWidget {
   final String eps;
+  final String name;
+  final String synopsis;
 
-  AnimePlayer(this.eps);
+  AnimePlayer({this.eps, this.name, this.synopsis});
   @override
   _AnimePlayerPageState createState() => _AnimePlayerPageState();
 }
@@ -96,24 +98,28 @@ class _AnimePlayerPageState extends State<AnimePlayer> {
               height: 280,
               child: Chewie(controller: _chewieController),
             ),
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Text(
+                widget.name,
+                style: TextStyle(
+                  color: black.withOpacity(0.7),
+                  fontSize: 23,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Text(
+                widget.synopsis,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                ),
+              ),
+            ),
           ],
-        )
-        // FutureBuilder(
-        //   future: getAnimeEps(),
-        //   builder: (context, snapshot) {
-
-        //     if (snapshot.hasData) {
-        //       print(snapshot.data['link_stream']);
-        //       return BetterPlayer.network(
-        //         snapshot.data['link_stream'],
-        //         betterPlayerConfiguration:
-        //             BetterPlayerConfiguration(aspectRatio: 16 / 9),
-        //       );
-        //     } else {
-        //       return Text("hai");
-        //     }
-        //   },
-        // ),
-        );
+        ));
   }
 }
