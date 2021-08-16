@@ -186,11 +186,37 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                               var episodeList = snapshot.data['episode_list'];
                               return GestureDetector(
                                 onTap: () {
+                                  final String endpoint = snapshot
+                                      .data['episode_list'][index]['id'];
+                                  final String url =
+                                      "https://anime.rifkiystark.tech/api/eps/$endpoint";
+
+                                  Future getAnimeEps() async {
+                                    var response =
+                                        await http.get(Uri.parse(url));
+                                    var value = json.decode(response.body);
+                                    return value;
+                                  }
+
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => AnimePlayer(snapshot
-                                          .data['episode_list'][index]['id']),
+                                      builder: (context) {
+                                        return FutureBuilder(
+                                          future: getAnimeEps(),
+                                          builder: (context, snapshot) {
+                                            if (snapshot.hasData) {
+                                              return AnimePlayer(
+                                                  snapshot.data['link_stream']);
+                                            } else {
+                                              return Center(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              );
+                                            }
+                                          },
+                                        );
+                                      },
                                     ),
                                   );
                                 },

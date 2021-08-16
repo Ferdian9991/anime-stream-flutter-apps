@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:js';
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 final String url = "https://anime.rifkiystark.tech/api/ongoing/page/1";
