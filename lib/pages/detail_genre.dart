@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:movie_ui/base_config.dart';
-import 'package:movie_ui/model/movie.dart';
-import 'package:movie_ui/service/api_service.dart';
 import 'package:movie_ui/pages/detail_movie_page.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,12 +14,41 @@ class DetailGenre extends StatefulWidget {
 }
 
 class _DetailGenrePageState extends State<DetailGenre> {
+  ScrollController scrollController = ScrollController();
+  int currentPage = 1;
+  int page = 1;
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(() {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent) {
+        setState(() {
+          page = currentPage++;
+        });
+      } else {
+        setState(() {
+          page = currentPage;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    scrollController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    Future getAnimeGenre([int page = 1]) async {
-      final String endpoint = widget.genre;
-      final String url =
-          "https://anime.rifkiystark.tech/api/genres/$endpoint/page/$page";
+    print(page);
+    final String endpoint = widget.genre;
+    final String url =
+        "https://anime.rifkiystark.tech/api/genres/$endpoint/page/" +
+            page.toString();
+
+    Future getAnimeGenre() async {
       var response = await http.get(Uri.parse(url));
       var value = json.decode(response.body);
       return value['animeList'];
@@ -30,6 +57,7 @@ class _DetailGenrePageState extends State<DetailGenre> {
     var length = widget.genre.toUpperCase().length;
     var capitalize = widget.genre.toUpperCase().substring(0, 1);
     var titleLower = widget.genre.substring(1, length);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: secondaryColor,
@@ -87,6 +115,7 @@ class _DetailGenrePageState extends State<DetailGenre> {
             return Padding(
               padding: const EdgeInsets.only(right: 5, left: 5),
               child: GridView.builder(
+                  controller: scrollController,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     mainAxisSpacing: 8,
                     crossAxisCount: counter,

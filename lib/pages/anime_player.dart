@@ -55,44 +55,45 @@ class _AnimePlayerPageState extends State<AnimePlayer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: secondaryColor,
-          iconTheme: IconThemeData(color: Colors.black),
-          elevation: 0,
-          centerTitle: true,
-          title: Row(
-            children: [
-              Text(
-                "Wibu",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                "Desu",
-                style: TextStyle(
-                  color: Colors.red,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
-              )
-            ],
-          ),
-          actions: [
-            IconButton(
-              icon: Icon(
-                Icons.bookmark_border,
+      appBar: AppBar(
+        backgroundColor: secondaryColor,
+        iconTheme: IconThemeData(color: Colors.black),
+        elevation: 0,
+        centerTitle: true,
+        title: Row(
+          children: [
+            Text(
+              "Wibu",
+              style: TextStyle(
                 color: Colors.black,
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
               ),
-              onPressed: () {},
             ),
+            Text(
+              "Desu",
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            )
           ],
         ),
-        backgroundColor: secondaryColor,
-        extendBodyBehindAppBar: false,
-        body: Column(
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.bookmark_border,
+              color: Colors.black,
+            ),
+            onPressed: () {},
+          ),
+        ],
+      ),
+      backgroundColor: secondaryColor,
+      extendBodyBehindAppBar: false,
+      body: SingleChildScrollView(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
@@ -122,6 +123,8 @@ class _AnimePlayerPageState extends State<AnimePlayer> {
               ),
             ),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }
