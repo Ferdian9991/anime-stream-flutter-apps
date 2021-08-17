@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
             title: Row(
               children: [
                 Text(
-                  "F",
+                  "Wibu",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 22,
@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Text(
-                  "Nime",
+                  "Desu",
                   style: TextStyle(
                     color: primaryColor,
                     fontSize: 22,
@@ -176,12 +176,34 @@ class _HomeState extends State<HomeView> {
                                     left: 5,
                                     right: 5,
                                   ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    image: DecorationImage(
-                                      image: NetworkImage(
-                                          snapshot.data[index]['thumb']),
-                                      fit: BoxFit.cover,
+                                  child: GridTile(
+                                    footer: ClipRRect(
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(15),
+                                        bottomRight: Radius.circular(15),
+                                      ),
+                                      child: Container(
+                                        color: Colors.black87,
+                                        child: ListTile(
+                                          title: Text(
+                                            snapshot.data[index]['title'],
+                                            style: TextStyle(
+                                                fontSize: 17,
+                                                color: Colors.white),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.clip,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(15),
+                                      ),
+                                      child: Image.network(
+                                        snapshot.data[index]['thumb'],
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -238,7 +260,7 @@ class _HomeState extends State<HomeView> {
                           padding: EdgeInsets.all(10),
                           margin: EdgeInsets.only(right: 7),
                           decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black),
+                              border: Border.all(color: Colors.red),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(25))),
                           child: Text(
@@ -296,19 +318,41 @@ class _HomeState extends State<HomeView> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              height: 160,
-                              width: 180,
-                              margin: EdgeInsets.only(right: 15),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: NetworkImage(
-                                    snapshot.data[index]['thumb'],
+                            Stack(
+                              children: <Widget>[
+                                Container(
+                                  height: 160,
+                                  width: 180,
+                                  margin: EdgeInsets.only(right: 15),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: NetworkImage(
+                                        snapshot.data[index]['thumb'],
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
+                                Container(
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      color: Colors.red[600],
+                                      borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.circular(20),
+                                        topLeft: Radius.circular(15),
+                                      )),
+                                  child: Text(
+                                    snapshot.data[index]['day_updated'],
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.clip,
+                                  ),
+                                ),
+                              ],
                             ),
                             Container(
                               width: 140,
@@ -379,19 +423,41 @@ class _HomeState extends State<HomeView> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              height: 140,
-                              width: 110,
-                              margin: EdgeInsets.only(right: 15),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: NetworkImage(
-                                    snapshot.data[index]['thumb'],
+                            Stack(
+                              children: <Widget>[
+                                Container(
+                                  height: 140,
+                                  width: 110,
+                                  margin: EdgeInsets.only(right: 15),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: NetworkImage(
+                                        snapshot.data[index]['thumb'],
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
+                                Container(
+                                  padding: EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                      color: Colors.red[600],
+                                      borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.circular(20),
+                                        topLeft: Radius.circular(15),
+                                      )),
+                                  child: Text(
+                                    snapshot.data[index]['score'].toString(),
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.clip,
+                                  ),
+                                ),
+                              ],
                             ),
                             Container(
                               width: 110,
@@ -404,7 +470,7 @@ class _HomeState extends State<HomeView> {
                                 maxLines: 1,
                                 overflow: TextOverflow.clip,
                               ),
-                            )
+                            ),
                           ],
                         ),
                       );

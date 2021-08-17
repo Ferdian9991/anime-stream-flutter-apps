@@ -63,7 +63,7 @@ class _AnimePlayerPageState extends State<AnimePlayer> {
           title: Row(
             children: [
               Text(
-                "F",
+                "Wibu",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 22,
@@ -71,9 +71,9 @@ class _AnimePlayerPageState extends State<AnimePlayer> {
                 ),
               ),
               Text(
-                "Nime",
+                "Desu",
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Colors.red,
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
@@ -93,9 +93,11 @@ class _AnimePlayerPageState extends State<AnimePlayer> {
         backgroundColor: secondaryColor,
         extendBodyBehindAppBar: false,
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              height: 280,
+              color: Colors.black,
+              height: MediaQuery.of(context).size.width / 2,
               child: Chewie(controller: _chewieController),
             ),
             Padding(

@@ -1,16 +1,14 @@
 import 'dart:convert';
-
+import 'package:movie_ui/service/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_ui/base_config.dart';
-import 'package:movie_ui/model/movie.dart';
-import 'package:movie_ui/service/api_service.dart';
 import 'package:movie_ui/pages/anime_player.dart';
 import 'package:http/http.dart' as http;
 
 class DetailMoviePage extends StatefulWidget {
-  final String movie;
+  final String anime;
 
-  DetailMoviePage(this.movie);
+  DetailMoviePage(this.anime);
   @override
   _DetailMoviePageState createState() => _DetailMoviePageState();
 }
@@ -18,7 +16,7 @@ class DetailMoviePage extends StatefulWidget {
 class _DetailMoviePageState extends State<DetailMoviePage> {
   @override
   Widget build(BuildContext context) {
-    final String endpoint = widget.movie;
+    final String endpoint = widget.anime;
     final String url = "https://anime.rifkiystark.tech/api/anime/$endpoint";
 
     Future getAnimeDetails() async {
@@ -66,7 +64,10 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
               season = "";
               duration = "";
             }
-            // var genre = snapshot.data['genre_list'];
+            var score = snapshot.data['score'];
+            if (score == null) {
+              score = 0;
+            }
             var genres = genre.map((item) => item['genre_name']).join(", ");
             return SingleChildScrollView(
               child: Column(
@@ -150,9 +151,7 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                                   5,
                                   (index) => Icon(
                                     Icons.star,
-                                    color: (index <
-                                            (snapshot.data['score'] / 2)
-                                                .floor())
+                                    color: (index < (score / 2).floor())
                                         ? Colors.yellow[700]
                                         : Colors.black87,
                                   ),
@@ -209,7 +208,6 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                                             final String name = "";
                                             final String link = "";
                                             final String synopsis = "";
-                                            print(snapshot.data);
                                             if (snapshot.hasData) {
                                               return AnimePlayer(
                                                 name: snapshot.data['title'],
@@ -299,99 +297,106 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                       ),
                     ),
                   ),
-                  // FutureBuilder(
-                  //   future: getNime(),
-                  //   builder: (context, snapshot) {
-                  //     if (snapshot.hasData) {
-                  //       return
-                  //           // Padding(
-                  //           //   padding: const EdgeInsets.only(left: 15, top: 15),
-                  //           //   child: Text(
-                  //           //     "Cast",
-                  //           //     style: TextStyle(
-                  //           //       color: white.withOpacity(0.7),
-                  //           //       fontSize: 22,
-                  //           //       fontWeight: FontWeight.bold,
-                  //           //     ),
-                  //           //   ),
-                  //           // );
-                  //           FutureBuilder(
-                  //         future: getNime(),
-                  //         builder: (context, snapshot) {
-                  //           if (snapshot.hasData) {
-                  //             var length = snapshot.data.length;
-                  //             return Container(
-                  //               height: 180,
-                  //               margin: EdgeInsets.only(
-                  //                 top: 10,
-                  //                 left: 16,
-                  //               ),
-                  //               child: ListView.builder(
-                  //                 scrollDirection: Axis.horizontal,
-                  //                 itemCount: length,
-                  //                 itemBuilder: (context, index) {
-                  //                   var link = snapshot.data[index]['link'];
-                  //                   return GestureDetector(
-                  //                     onTap: () {
-                  //                       Navigator.push(
-                  //                         context,
-                  //                         MaterialPageRoute(
-                  //                           builder: (context) =>
-                  //                               DetailMoviePage(
-                  //                             link['endpoint'],
-                  //                           ),
-                  //                         ),
-                  //                       );
-                  //                     },
-                  //                     child: Column(
-                  //                       mainAxisAlignment:
-                  //                           MainAxisAlignment.spaceEvenly,
-                  //                       crossAxisAlignment:
-                  //                           CrossAxisAlignment.start,
-                  //                       children: [
-                  //                         Container(
-                  //                           height: 140,
-                  //                           width: 140,
-                  //                           margin: EdgeInsets.only(right: 15),
-                  //                           decoration: BoxDecoration(
-                  //                             borderRadius:
-                  //                                 BorderRadius.circular(15),
-                  //                             image: DecorationImage(
-                  //                               fit: BoxFit.fill,
-                  //                               image: NetworkImage(
-                  //                                 link['thumbnail'],
-                  //                               ),
-                  //                             ),
-                  //                           ),
-                  //                         ),
-                  //                         Container(
-                  //                           width: 110,
-                  //                           child: Text(
-                  //                             snapshot.data[index]['title'],
-                  //                             style: TextStyle(
-                  //                               color: black,
-                  //                               fontSize: 17,
-                  //                             ),
-                  //                             maxLines: 1,
-                  //                             overflow: TextOverflow.clip,
-                  //                           ),
-                  //                         )
-                  //                       ],
-                  //                     ),
-                  //                   );
-                  //                 },
-                  //               ),
-                  //             );
-                  //           } else {
-                  //             return Text("error");
-                  //           }
-                  //         },
-                  //       );
-                  //     } else {
-                  //       return Text("error");
-                  //     }
-                  //   },
-                  // )
+                  FutureBuilder(
+                    future: actionGenre(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Container(
+                          height: 170,
+                          margin: EdgeInsets.only(
+                            top: 10,
+                            left: 15,
+                          ),
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (context, index) {
+                              var length = snapshot.data[index]['id'].length;
+                              var endpoint = snapshot.data[index]['id']
+                                  .substring(28, length);
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => DetailMoviePage(
+                                        endpoint,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Stack(
+                                      children: <Widget>[
+                                        Container(
+                                          height: 140,
+                                          width: 110,
+                                          margin: EdgeInsets.only(right: 15),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            image: DecorationImage(
+                                              fit: BoxFit.fill,
+                                              image: NetworkImage(
+                                                snapshot.data[index]['thumb'],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.all(8),
+                                          decoration: BoxDecoration(
+                                              color: Colors.red[600],
+                                              borderRadius: BorderRadius.only(
+                                                bottomRight:
+                                                    Radius.circular(20),
+                                                topLeft: Radius.circular(15),
+                                              )),
+                                          child: Text(
+                                            snapshot.data[index]['score']
+                                                .toString(),
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15,
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.clip,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Container(
+                                      width: 110,
+                                      child: Text(
+                                        snapshot.data[index]['anime_name'],
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 17,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.clip,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      } else {
+                        return Container(
+                          height: 160,
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      }
+                    },
+                  ),
                 ],
               ),
             );

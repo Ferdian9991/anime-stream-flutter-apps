@@ -104,50 +104,72 @@ class _DetailGenrePageState extends State<DetailGenre> {
                         left: 5,
                         right: 5,
                       ),
-                      child: Hero(
-                          tag: snapshot.data[index]['anime_name'],
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      DetailMoviePage(endpoint),
-                                ),
-                              );
-                            },
-                            child: GridTile(
-                              footer: ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(15),
-                                  bottomRight: Radius.circular(15),
-                                ),
-                                child: Container(
-                                  color: Colors.black54,
-                                  child: ListTile(
-                                    title: Text(
-                                      snapshot.data[index]['anime_name'],
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.clip,
+                      child: Stack(
+                        children: <Widget>[
+                          Hero(
+                              tag: snapshot.data[index]['anime_name'],
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          DetailMoviePage(endpoint),
+                                    ),
+                                  );
+                                },
+                                child: GridTile(
+                                  footer: ClipRRect(
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(15),
+                                      bottomRight: Radius.circular(15),
+                                    ),
+                                    child: Container(
+                                      color: Colors.black54,
+                                      child: ListTile(
+                                        title: Text(
+                                          snapshot.data[index]['anime_name'],
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(15),
+                                    ),
+                                    child: Image.network(
+                                      snapshot.data[index]['thumb'],
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
+                              )),
+                          Container(
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                                color: Colors.red[600],
+                                borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(20),
+                                  topLeft: Radius.circular(15),
+                                )),
+                            child: Text(
+                              snapshot.data[index]['score'].toString(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
                               ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(15),
-                                ),
-                                child: Image.network(
-                                  snapshot.data[index]['thumb'],
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.clip,
                             ),
-                          )),
+                          ),
+                        ],
+                      ),
                     );
                   }),
             );
