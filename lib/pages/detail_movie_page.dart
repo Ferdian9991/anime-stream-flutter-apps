@@ -97,69 +97,100 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                           end: Alignment.topCenter,
                         ),
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 15, bottom: 20),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              title,
-                              style: TextStyle(
-                                color: black.withOpacity(0.7),
-                                fontSize: 28,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              season,
-                              style: TextStyle(
-                                color: black.withOpacity(0.7),
-                                fontSize: 23,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              duration,
-                              style: TextStyle(
-                                color: black.withOpacity(0.7),
-                                fontSize: 20,
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              "Genre: " + genres,
-                              style: TextStyle(
-                                color: black.withOpacity(0.7),
-                                fontSize: 17,
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Row(
-                              children: [
-                                Text(
-                                  snapshot.data['score'].toString(),
-                                  style: TextStyle(
-                                    color: Colors.yellow[900],
-                                    fontSize: 17,
+                      child: Row(
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 15, bottom: 21),
+                                child: Container(
+                                  height: 160,
+                                  width: 130,
+                                  margin: EdgeInsets.only(right: 15),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: NetworkImage(
+                                        snapshot.data['thumb'],
+                                      ),
+                                    ),
                                   ),
                                 ),
-                                SizedBox(width: 5),
-                                ...List.generate(
-                                  5,
-                                  (index) => Icon(
-                                    Icons.star,
-                                    color: (index < (score / 2).floor())
-                                        ? Colors.yellow[700]
-                                        : Colors.black87,
+                              ),
+                            ],
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width / 2,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 5, bottom: 20),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    title,
+                                    style: TextStyle(
+                                      color: black.withOpacity(0.7),
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
+                                  SizedBox(height: 5),
+                                  Text(
+                                    season,
+                                    style: TextStyle(
+                                      color: black.withOpacity(0.7),
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(height: 5),
+                                  Text(
+                                    duration,
+                                    style: TextStyle(
+                                      color: black.withOpacity(0.7),
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  SizedBox(height: 5),
+                                  Text(
+                                    "Genre: " + genres,
+                                    style: TextStyle(
+                                      color: black.withOpacity(0.7),
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        snapshot.data['score'].toString(),
+                                        style: TextStyle(
+                                          color: Colors.yellow[900],
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      SizedBox(width: 5),
+                                      ...List.generate(
+                                        5,
+                                        (index) => Icon(
+                                          Icons.star,
+                                          color: (index < (score / 2).floor())
+                                              ? Colors.yellow[700]
+                                              : Colors.black87,
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
