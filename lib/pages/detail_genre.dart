@@ -18,11 +18,10 @@ class DetailGenre extends StatefulWidget {
 class _DetailGenrePageState extends State<DetailGenre> {
   @override
   Widget build(BuildContext context) {
-    final String endpoint = widget.genre;
-    final String url =
-        "https://anime.rifkiystark.tech/api/genres/$endpoint/page/1";
-
-    Future getAnimeGenre() async {
+    Future getAnimeGenre([int page = 1]) async {
+      final String endpoint = widget.genre;
+      final String url =
+          "https://anime.rifkiystark.tech/api/genres/$endpoint/page/$page";
       var response = await http.get(Uri.parse(url));
       var value = json.decode(response.body);
       return value['animeList'];
@@ -31,7 +30,6 @@ class _DetailGenrePageState extends State<DetailGenre> {
     var length = widget.genre.toUpperCase().length;
     var capitalize = widget.genre.toUpperCase().substring(0, 1);
     var titleLower = widget.genre.substring(1, length);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: secondaryColor,

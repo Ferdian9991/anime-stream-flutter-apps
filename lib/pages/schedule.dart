@@ -111,10 +111,14 @@ class _ScheduleState extends State<Schedule> {
                   ),
                 );
               } else {
-                return Container(
-                  height: 160,
-                  child: Center(
-                    child: CircularProgressIndicator(),
+                return Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Container(
+                    color: Colors.black12,
+                    height: 160,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   ),
                 );
               }
@@ -215,10 +219,14 @@ class _ScheduleState extends State<Schedule> {
                   ),
                 );
               } else {
-                return Container(
-                  height: 160,
-                  child: Center(
-                    child: CircularProgressIndicator(),
+                return Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Container(
+                    color: Colors.black12,
+                    height: 160,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   ),
                 );
               }
@@ -319,10 +327,14 @@ class _ScheduleState extends State<Schedule> {
                   ),
                 );
               } else {
-                return Container(
-                  height: 160,
-                  child: Center(
-                    child: CircularProgressIndicator(),
+                return Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Container(
+                    color: Colors.black12,
+                    height: 160,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   ),
                 );
               }
@@ -423,10 +435,14 @@ class _ScheduleState extends State<Schedule> {
                   ),
                 );
               } else {
-                return Container(
-                  height: 160,
-                  child: Center(
-                    child: CircularProgressIndicator(),
+                return Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Container(
+                    color: Colors.black12,
+                    height: 160,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   ),
                 );
               }
@@ -527,10 +543,14 @@ class _ScheduleState extends State<Schedule> {
                   ),
                 );
               } else {
-                return Container(
-                  height: 160,
-                  child: Center(
-                    child: CircularProgressIndicator(),
+                return Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Container(
+                    color: Colors.black12,
+                    height: 160,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   ),
                 );
               }
@@ -631,10 +651,14 @@ class _ScheduleState extends State<Schedule> {
                   ),
                 );
               } else {
-                return Container(
-                  height: 160,
-                  child: Center(
-                    child: CircularProgressIndicator(),
+                return Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Container(
+                    color: Colors.black12,
+                    height: 160,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   ),
                 );
               }
@@ -735,10 +759,14 @@ class _ScheduleState extends State<Schedule> {
                   ),
                 );
               } else {
-                return Container(
-                  height: 160,
-                  child: Center(
-                    child: CircularProgressIndicator(),
+                return Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Container(
+                    color: Colors.black12,
+                    height: 160,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   ),
                 );
               }

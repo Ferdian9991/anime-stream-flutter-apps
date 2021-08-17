@@ -80,26 +80,31 @@ class _HomePageState extends State<HomePage> {
               )
             ],
             bottom: TabBar(
+              labelColor: Colors.black,
               tabs: [
                 Tab(
+                  text: "Home",
                   icon: Icon(
                     Icons.home,
                     color: Colors.black45,
                   ),
                 ),
                 Tab(
+                  text: "Jadwal",
                   icon: Icon(
                     Icons.menu,
                     color: Colors.black45,
                   ),
                 ),
                 Tab(
+                  text: "Completed",
                   icon: Icon(
                     Icons.star,
                     color: Colors.black45,
                   ),
                 ),
                 Tab(
+                  text: "Tentang",
                   icon: Icon(
                     Icons.help,
                     color: Colors.black45,
@@ -219,10 +224,12 @@ class _HomeState extends State<HomeView> {
                 } else {
                   return Padding(
                     padding: const EdgeInsets.only(
-                      right: 15,
+                      right: 10,
                     ),
                     child: Container(
-                      color: Colors.black12,
+                      decoration: BoxDecoration(
+                          color: Colors.black12,
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
                       height: 200,
                       child: Center(
                         child: CircularProgressIndicator(),
@@ -276,7 +283,21 @@ class _HomeState extends State<HomeView> {
                   ),
                 );
               } else {
-                return Text("error");
+                return Padding(
+                  padding: const EdgeInsets.only(
+                    right: 15,
+                    top: 10,
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.black12,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    height: 41,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                );
               }
             },
           ),
@@ -375,10 +396,16 @@ class _HomeState extends State<HomeView> {
                   ),
                 );
               } else {
-                return Container(
-                  height: 160,
-                  child: Center(
-                    child: CircularProgressIndicator(),
+                return Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.black12,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    height: 160,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   ),
                 );
               }
@@ -480,10 +507,18 @@ class _HomeState extends State<HomeView> {
                   ),
                 );
               } else {
-                return Container(
-                  height: 160,
-                  child: Center(
-                    child: CircularProgressIndicator(),
+                return Padding(
+                  padding: const EdgeInsets.only(
+                    right: 15,
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.black12,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    height: 160,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   ),
                 );
               }
