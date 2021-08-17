@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:movie_ui/pages/schedule.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_ui/base_config.dart';
@@ -108,7 +109,8 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           backgroundColor: Colors.white,
-          body: TabBarView(children: [HomeView(), Genre(), Popular(), About()]),
+          body: TabBarView(
+              children: [HomeView(), Schedule(), Popular(), About()]),
         ),
       );
 }
@@ -546,18 +548,6 @@ class _HomeState extends State<HomeView> {
         ],
       ),
     );
-  }
-}
-
-class Genre extends StatefulWidget {
-  @override
-  _GenreState createState() => _GenreState();
-}
-
-class _GenreState extends State<Genre> {
-  @override
-  Widget build(BuildContext context) {
-    return Text("Genre");
   }
 }
 
