@@ -112,13 +112,12 @@ class _ScheduleState extends State<Schedule> {
                 );
               } else {
                 return Padding(
-                  padding: const EdgeInsets.only(right: 15),
+                  padding: const EdgeInsets.only(right: 15, top: 15),
                   child: Container(
-                    color: Colors.black12,
                     height: 160,
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                    decoration: BoxDecoration(
+                        color: Colors.black12,
+                        borderRadius: BorderRadius.all(Radius.circular(15))),
                   ),
                 );
               }
@@ -220,13 +219,12 @@ class _ScheduleState extends State<Schedule> {
                 );
               } else {
                 return Padding(
-                  padding: const EdgeInsets.only(right: 15),
+                  padding: const EdgeInsets.only(right: 15, top: 15),
                   child: Container(
-                    color: Colors.black12,
                     height: 160,
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                    decoration: BoxDecoration(
+                        color: Colors.black12,
+                        borderRadius: BorderRadius.all(Radius.circular(15))),
                   ),
                 );
               }
@@ -328,13 +326,12 @@ class _ScheduleState extends State<Schedule> {
                 );
               } else {
                 return Padding(
-                  padding: const EdgeInsets.only(right: 15),
+                  padding: const EdgeInsets.only(right: 15, top: 15),
                   child: Container(
-                    color: Colors.black12,
                     height: 160,
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                    decoration: BoxDecoration(
+                        color: Colors.black12,
+                        borderRadius: BorderRadius.all(Radius.circular(15))),
                   ),
                 );
               }
@@ -436,13 +433,12 @@ class _ScheduleState extends State<Schedule> {
                 );
               } else {
                 return Padding(
-                  padding: const EdgeInsets.only(right: 15),
+                  padding: const EdgeInsets.only(right: 15, top: 15),
                   child: Container(
-                    color: Colors.black12,
                     height: 160,
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                    decoration: BoxDecoration(
+                        color: Colors.black12,
+                        borderRadius: BorderRadius.all(Radius.circular(15))),
                   ),
                 );
               }
@@ -544,13 +540,12 @@ class _ScheduleState extends State<Schedule> {
                 );
               } else {
                 return Padding(
-                  padding: const EdgeInsets.only(right: 15),
+                  padding: const EdgeInsets.only(right: 15, top: 15),
                   child: Container(
-                    color: Colors.black12,
                     height: 160,
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                    decoration: BoxDecoration(
+                        color: Colors.black12,
+                        borderRadius: BorderRadius.all(Radius.circular(15))),
                   ),
                 );
               }
@@ -652,13 +647,12 @@ class _ScheduleState extends State<Schedule> {
                 );
               } else {
                 return Padding(
-                  padding: const EdgeInsets.only(right: 15),
+                  padding: const EdgeInsets.only(right: 15, top: 15),
                   child: Container(
-                    color: Colors.black12,
                     height: 160,
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                    decoration: BoxDecoration(
+                        color: Colors.black12,
+                        borderRadius: BorderRadius.all(Radius.circular(15))),
                   ),
                 );
               }
@@ -760,13 +754,12 @@ class _ScheduleState extends State<Schedule> {
                 );
               } else {
                 return Padding(
-                  padding: const EdgeInsets.only(right: 15),
+                  padding: const EdgeInsets.only(right: 15, top: 15),
                   child: Container(
-                    color: Colors.black12,
                     height: 160,
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                    decoration: BoxDecoration(
+                        color: Colors.black12,
+                        borderRadius: BorderRadius.all(Radius.circular(15))),
                   ),
                 );
               }

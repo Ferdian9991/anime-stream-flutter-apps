@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_ui/base_config.dart';
 import 'package:movie_ui/model/animeByGenre.dart';
 import 'package:movie_ui/pages/detail_movie_page.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/cupertino.dart';
 
 class DetailGenre extends StatefulWidget {
   final String genre;
@@ -68,9 +70,9 @@ class _DetailGenrePageState extends State<DetailGenre> {
     final double shortestSide = MediaQuery.of(context).size.shortestSide;
     var counter;
     if (shortestSide < 600) {
-      counter = 2;
+      counter = 3;
     } else {
-      counter = 4;
+      counter = 3;
     }
     return Scaffold(
       appBar: AppBar(
@@ -115,10 +117,12 @@ class _DetailGenrePageState extends State<DetailGenre> {
         child: GridView.builder(
             controller: scrollController,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              mainAxisSpacing: 8,
+              childAspectRatio: 50 / 60,
+              mainAxisSpacing: 30,
               crossAxisCount: counter,
+              crossAxisSpacing: 10,
             ),
-            padding: EdgeInsets.only(top: 16, left: 15, right: 15),
+            padding: EdgeInsets.only(top: 20, left: 0, right: 0),
             itemCount: _nime.length,
             itemBuilder: (context, index) {
               var length = _nime[index].id.length;

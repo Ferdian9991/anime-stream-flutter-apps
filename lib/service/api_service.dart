@@ -34,6 +34,15 @@ Future actionGenre() async {
   return value['animeList'];
 }
 
+final String romance =
+    "https://anime.rifkiystark.tech/api/genres/action/page/1";
+
+Future romanceGenre() async {
+  var response = await http.get(Uri.parse(romance));
+  var value = json.decode(response.body);
+  return value['animeList'];
+}
+
 final String genres = "https://anime.rifkiystark.tech/api/genres";
 
 Future genreAnime() async {
