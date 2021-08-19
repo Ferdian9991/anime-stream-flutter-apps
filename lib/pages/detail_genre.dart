@@ -68,7 +68,7 @@ class _DetailGenrePageState extends State<DetailGenre> {
     final double shortestSide = MediaQuery.of(context).size.shortestSide;
     var counter;
     if (shortestSide < 600) {
-      counter = 3;
+      counter = 2;
     } else {
       counter = 4;
     }
