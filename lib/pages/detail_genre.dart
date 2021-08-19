@@ -21,12 +21,11 @@ class _DetailGenrePageState extends State<DetailGenre> {
   @override
   void initState() {
     super.initState();
-    searchData();
-    searchData();
+    animeByGenre();
     scrollController.addListener(() {
-      if (scrollController.position.pixels >=
+      if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
-        searchData();
+        animeByGenre();
         setState(() {
           page = currentPage++;
         });
@@ -45,8 +44,7 @@ class _DetailGenrePageState extends State<DetailGenre> {
   }
 
   List<AnimeByGenre> _nime = [];
-  List<Fooz> nime = [];
-  Future<Null> searchData() async {
+  Future<Null> animeByGenre() async {
     final String endpoints = widget.genre;
     final String urL =
         "https://anime.rifkiystark.tech/api/genres/$endpoints/page/" +
@@ -62,36 +60,8 @@ class _DetailGenrePageState extends State<DetailGenre> {
     }
   }
 
-  // Future animeData() async {
-  //   final String endpoints = widget.genre;
-  //   final String urL =
-  //       "https://anime.rifkiystark.tech/api/genres/$endpoints/page/" +
-  //           page.toString();
-  //   final response = await http.get(Uri.parse(urL));
-  //   final data = json.decode(response.body);
-  //   // data.forEach((nimex) {
-  //   //   _nime.add(AnimeByGenre.fromJson(nimex));
-  //   // });
-  //   for (Map i in data['animeList']) {
-  //     _nime.add(AnimeByGenre.fromJson(i));
-  //   }
-  //   return data['animeList'];
-  // }
-
   @override
   Widget build(BuildContext context) {
-    print(nime);
-
-    Future getAnimeGenre() async {
-      final String endpoint = widget.genre;
-      final String url =
-          "https://anime.rifkiystark.tech/api/genres/$endpoint/page/" +
-              page.toString();
-      var response = await http.get(Uri.parse(url));
-      var value = json.decode(response.body);
-      return value['animeList'];
-    }
-
     var length = widget.genre.toUpperCase().length;
     var capitalize = widget.genre.toUpperCase().substring(0, 1);
     var titleLower = widget.genre.substring(1, length);
