@@ -1,8 +1,3 @@
-import 'dart:convert';
-import 'dart:js';
-import 'package:flutter/cupertino.dart';
-import 'package:http/http.dart' as http;
-
 // class Search {
 //   String title;
 //   String link;
