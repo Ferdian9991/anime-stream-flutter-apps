@@ -131,7 +131,7 @@ class _DetailGenrePageState extends State<DetailGenre> {
                 child: Stack(
                   children: <Widget>[
                     Hero(
-                        tag: "List",
+                        tag: _nime[index].name,
                         child: InkWell(
                           onTap: () {
                             Navigator.push(

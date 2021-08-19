@@ -2,11 +2,9 @@ import 'dart:convert';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:movie_ui/pages/schedule.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_ui/base_config.dart';
 import 'package:movie_ui/model/movie.dart';
-import 'package:movie_ui/model/search.dart';
 import 'package:movie_ui/service/api_service.dart';
 import 'package:movie_ui/pages/detail_movie_page.dart';
 import 'package:movie_ui/pages/detail_genre.dart';
@@ -18,29 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Search> _nime = [];
-  List<Search> _search = [];
-
-  Future<Null> searchData() async {
-    final String urL =
-        "https://kusonime-scrapper.glitch.me/api/genres/fantasy/1";
-    final response = await http.get(Uri.parse(urL));
-    if (response.statusCode == 200) {
-      setState(() {
-        final data = json.decode(response.body);
-        for (Map i in data) {
-          _nime.add(Search.fromJson(i));
-        }
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    searchData();
-  }
-
   @override
   Widget build(BuildContext context) => DefaultTabController(
         length: 4,
