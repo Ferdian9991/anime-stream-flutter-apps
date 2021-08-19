@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:movie_ui/base_config.dart';
+import 'package:movie_ui/model/animeByGenre.dart';
 import 'package:movie_ui/pages/detail_movie_page.dart';
 import 'package:http/http.dart' as http;
 
@@ -15,14 +16,16 @@ class DetailGenre extends StatefulWidget {
 
 class _DetailGenrePageState extends State<DetailGenre> {
   ScrollController scrollController = ScrollController();
-  int currentPage = 1;
+  int currentPage = 2;
   int page = 1;
   @override
   void initState() {
     super.initState();
+    animeData();
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
           scrollController.position.maxScrollExtent) {
+        animeData();
         setState(() {
           page = currentPage++;
         });
@@ -40,15 +43,30 @@ class _DetailGenrePageState extends State<DetailGenre> {
     scrollController.dispose();
   }
 
+  List<AnimeByGenre> _nime = [];
+
+  Future animeData() async {
+    final String endpoints = widget.genre;
+    final String urL =
+        "https://anime.rifkiystark.tech/api/genres/$endpoints/page/" +
+            page.toString();
+    final response = await http.get(Uri.parse(urL));
+    final data = json.decode(response.body)['animeList'];
+    data.forEach((nimex) {
+      _nime.add(AnimeByGenre.fromJson(nimex));
+    });
+    return data['animeList'];
+  }
+
   @override
   Widget build(BuildContext context) {
     print(page);
-    final String endpoint = widget.genre;
-    final String url =
-        "https://anime.rifkiystark.tech/api/genres/$endpoint/page/" +
-            page.toString();
 
     Future getAnimeGenre() async {
+      final String endpoint = widget.genre;
+      final String url =
+          "https://anime.rifkiystark.tech/api/genres/$endpoint/page/" +
+              page.toString();
       var response = await http.get(Uri.parse(url));
       var value = json.decode(response.body);
       return value['animeList'];
@@ -108,7 +126,7 @@ class _DetailGenrePageState extends State<DetailGenre> {
                 MediaQuery.of(context).size.shortestSide;
             var counter;
             if (shortestSide < 600) {
-              counter = 2;
+              counter = 3;
             } else {
               counter = 4;
             }
@@ -121,11 +139,10 @@ class _DetailGenrePageState extends State<DetailGenre> {
                     crossAxisCount: counter,
                   ),
                   padding: EdgeInsets.only(top: 16, left: 15, right: 15),
-                  itemCount: snapshot.data.length,
+                  itemCount: _nime.length,
                   itemBuilder: (context, index) {
-                    var length = snapshot.data[index]['id'].length;
-                    var endpoint =
-                        snapshot.data[index]['id'].substring(28, length);
+                    var length = _nime[index].id.length;
+                    var endpoint = _nime[index].id.substring(28, length);
                     return Padding(
                       padding: const EdgeInsets.only(
                         left: 5,
@@ -134,7 +151,7 @@ class _DetailGenrePageState extends State<DetailGenre> {
                       child: Stack(
                         children: <Widget>[
                           Hero(
-                              tag: snapshot.data[index]['anime_name'],
+                              tag: _nime[index].name,
                               child: InkWell(
                                 onTap: () {
                                   Navigator.push(
@@ -155,7 +172,7 @@ class _DetailGenrePageState extends State<DetailGenre> {
                                       color: Colors.black54,
                                       child: ListTile(
                                         title: Text(
-                                          snapshot.data[index]['anime_name'],
+                                          _nime[index].name,
                                           style: TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
@@ -171,7 +188,7 @@ class _DetailGenrePageState extends State<DetailGenre> {
                                       Radius.circular(15),
                                     ),
                                     child: Image.network(
-                                      snapshot.data[index]['thumb'],
+                                      _nime[index].thumb,
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -186,7 +203,7 @@ class _DetailGenrePageState extends State<DetailGenre> {
                                   topLeft: Radius.circular(15),
                                 )),
                             child: Text(
-                              snapshot.data[index]['score'].toString(),
+                              _nime[index].score.toString(),
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 15,
