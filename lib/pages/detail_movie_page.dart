@@ -68,6 +68,8 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
             if (score == null) {
               score = 0;
             }
+            var epsLength = snapshot.data['episode_list'];
+            int nums = epsLength.length;
             var genres = genre.map((item) => item['genre_name']).join(", ");
             return SingleChildScrollView(
               child: Column(
@@ -107,7 +109,7 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                                 padding:
                                     const EdgeInsets.only(left: 15, bottom: 21),
                                 child: Container(
-                                  height: 160,
+                                  height: 150,
                                   width: 130,
                                   margin: EdgeInsets.only(right: 15),
                                   decoration: BoxDecoration(
@@ -124,7 +126,7 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                             ],
                           ),
                           Container(
-                            width: MediaQuery.of(context).size.width / 2,
+                            width: MediaQuery.of(context).size.width / 16 * 9,
                             child: Padding(
                               padding: EdgeInsets.only(left: 5, bottom: 20),
                               child: Column(
@@ -138,6 +140,8 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                     ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.clip,
                                   ),
                                   SizedBox(height: 5),
                                   Text(
@@ -148,7 +152,15 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(height: 5),
+                                  SizedBox(height: 2),
+                                  Text(
+                                    "Status: " + snapshot.data['status'],
+                                    style: TextStyle(
+                                      color: black.withOpacity(0.7),
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  SizedBox(height: 2),
                                   Text(
                                     duration,
                                     style: TextStyle(
@@ -156,7 +168,7 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                                       fontSize: 15,
                                     ),
                                   ),
-                                  SizedBox(height: 5),
+                                  SizedBox(height: 2),
                                   Text(
                                     "Genre: " + genres,
                                     style: TextStyle(
@@ -164,7 +176,7 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                                       fontSize: 15,
                                     ),
                                   ),
-                                  SizedBox(height: 5),
+                                  SizedBox(height: 2),
                                   Row(
                                     children: [
                                       Text(
@@ -199,6 +211,10 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         var sinopsis = snapshot.data['synopsis'];
+                        var thumb = snapshot.data['thumb'];
+                        var rate = snapshot.data['score'];
+                        var status = snapshot.data['status'];
+                        var studio = snapshot.data['studio'];
                         return Container(
                           height: 41,
                           margin: EdgeInsets.only(
@@ -215,68 +231,131 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                               // var endpoint = snapshot.data[index]['id']
                               //     .substring(0, length - 1);
                               var episodeList = snapshot.data['episode_list'];
-                              return GestureDetector(
-                                onTap: () {
-                                  final String endpoint = snapshot
-                                      .data['episode_list'][index]['id'];
-                                  final String url =
-                                      "https://anime.rifkiystark.tech/api/eps/$endpoint";
+                              var eps_num = nums--;
+                              var checker = episodeList[index]['title']
+                                  .contains("Episode");
+                              if (checker == true) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    final String endpoint = snapshot
+                                        .data['episode_list'][index]['id'];
+                                    final String url =
+                                        "https://anime.rifkiystark.tech/api/eps/$endpoint";
 
-                                  Future getAnimeEps() async {
-                                    var response =
-                                        await http.get(Uri.parse(url));
-                                    var value = json.decode(response.body);
-                                    return value;
-                                  }
+                                    Future getAnimeEps() async {
+                                      var response =
+                                          await http.get(Uri.parse(url));
+                                      var value = json.decode(response.body);
+                                      return value;
+                                    }
 
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) {
-                                        return FutureBuilder(
-                                          future: getAnimeEps(),
-                                          builder: (context, snapshot) {
-                                            final String name = "";
-                                            final String link = "";
-                                            final String synopsis = "";
-                                            if (snapshot.hasData) {
-                                              return AnimePlayer(
-                                                name: snapshot.data['title'],
-                                                eps: snapshot
-                                                    .data['link_stream'],
-                                                synopsis: sinopsis,
-                                              );
-                                            } else {
-                                              return Center(
-                                                child:
-                                                    CircularProgressIndicator(),
-                                              );
-                                            }
-                                          },
-                                        );
-                                      },
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return FutureBuilder(
+                                            future: getAnimeEps(),
+                                            builder: (context, snapshot) {
+                                              if (snapshot.hasData) {
+                                                return AnimePlayer(
+                                                  name: snapshot.data['title'],
+                                                  eps: snapshot
+                                                      .data['link_stream'],
+                                                  synopsis: sinopsis,
+                                                  thumbnail: thumb,
+                                                  genreList: genres,
+                                                  score: rate.toString(),
+                                                  status: status,
+                                                  studio: studio,
+                                                );
+                                              } else {
+                                                return Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                );
+                                              }
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(10),
+                                    margin: EdgeInsets.only(right: 7),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.black),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(25))),
+                                    child: Text(
+                                      "Episode " + eps_num.toString(),
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                  );
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(10),
-                                  margin: EdgeInsets.only(right: 7),
-                                  decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.black),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(25))),
-                                  child: Text(
-                                    episodeList[index]['title'].substring(
-                                        episodeList[index]['title']
-                                            .indexOf("Episode"),
-                                        episodeList[index]['title']
-                                            .indexOf("Subtitle")),
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold),
                                   ),
-                                ),
-                              );
+                                );
+                              } else {
+                                return GestureDetector(
+                                  onTap: () {
+                                    final String endpoint = snapshot
+                                        .data['episode_list'][index]['id'];
+                                    final String url =
+                                        "https://anime.rifkiystark.tech/api/eps/$endpoint";
+
+                                    Future getAnimeEps() async {
+                                      var response =
+                                          await http.get(Uri.parse(url));
+                                      var value = json.decode(response.body);
+                                      return value;
+                                    }
+
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return FutureBuilder(
+                                            future: getAnimeEps(),
+                                            builder: (context, snapshot) {
+                                              final String name = "";
+                                              final String link = "";
+                                              final String synopsis = "";
+
+                                              if (snapshot.hasData) {
+                                                return AnimePlayer(
+                                                  name: snapshot.data['title'],
+                                                  eps: snapshot
+                                                      .data['link_stream'],
+                                                  synopsis: sinopsis,
+                                                );
+                                              } else {
+                                                return Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                );
+                                              }
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(10),
+                                    margin: EdgeInsets.only(right: 7),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.black),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(25))),
+                                    child: Text(
+                                      episodeList[index]['title'],
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                );
+                              }
                             },
                           ),
                         );

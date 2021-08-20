@@ -8,8 +8,22 @@ class AnimePlayer extends StatefulWidget {
   final String eps;
   final String name;
   final String synopsis;
+  final String thumbnail;
+  final String genreList;
+  final String score;
+  final String studio;
+  final String status;
 
-  AnimePlayer({this.eps, this.name, this.synopsis});
+  AnimePlayer({
+    this.eps,
+    this.name,
+    this.synopsis,
+    this.thumbnail,
+    this.genreList,
+    this.score,
+    this.status,
+    this.studio,
+  });
   @override
   _AnimePlayerPageState createState() => _AnimePlayerPageState();
 }
@@ -30,18 +44,18 @@ class _AnimePlayerPageState extends State<AnimePlayer> {
       autoPlay: true,
       looping: true,
 
-      /* Try playing around with some of these other options:
-       showControls: false,
-       materialProgressColors: ChewieProgressColors(
-         playedColor: Colors.red,
-         handleColor: Colors.blue,
-         backgroundColor: Colors.grey,
-         bufferedColor: Colors.lightGreen,
-       ),
-       placeholder: Container(
-         color: Colors.grey,
-       ),
-       autoInitialize: true,*/
+      //  Try playing around with some of these other options:
+      // showControls: false,
+      materialProgressColors: ChewieProgressColors(
+        playedColor: Colors.red[500],
+        handleColor: Colors.red[700],
+        backgroundColor: Colors.grey,
+        bufferedColor: Colors.white,
+      ),
+      placeholder: Container(
+        color: Colors.black12,
+      ),
+      autoInitialize: true,
     );
   }
 
@@ -97,19 +111,98 @@ class _AnimePlayerPageState extends State<AnimePlayer> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              color: Colors.black,
-              height: MediaQuery.of(context).size.width / 2,
+              height: MediaQuery.of(context).size.width / 16 * 9,
               child: Chewie(controller: _chewieController),
             ),
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: Text(
-                widget.name,
-                style: TextStyle(
-                  color: black.withOpacity(0.7),
-                  fontSize: 23,
-                  fontWeight: FontWeight.bold,
-                ),
+            Container(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 15,
+                        bottom: 21,
+                        top: 15,
+                      ),
+                      child: Container(
+                        height: 185,
+                        margin: EdgeInsets.only(right: 15),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: NetworkImage(
+                              widget.thumbnail,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width / 16 * 9,
+                          child: Text(
+                            widget.name,
+                            style: TextStyle(
+                              color: black.withOpacity(0.7),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Container(
+                        width: MediaQuery.of(context).size.width / 16 * 9,
+                        child: Text(
+                          "Studio: " + widget.studio,
+                          style: TextStyle(
+                            color: black.withOpacity(0.7),
+                            fontSize: 17,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 2),
+                      Container(
+                        width: MediaQuery.of(context).size.width / 16 * 9,
+                        child: Text(
+                          "Genre: " + widget.genreList,
+                          style: TextStyle(
+                            color: black.withOpacity(0.7),
+                            fontSize: 17,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 2),
+                      Container(
+                        width: MediaQuery.of(context).size.width / 16 * 9,
+                        child: Text(
+                          "Skor: " + widget.score,
+                          style: TextStyle(
+                            color: black.withOpacity(0.7),
+                            fontSize: 17,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 2),
+                      Container(
+                        width: MediaQuery.of(context).size.width / 16 * 9,
+                        child: Text(
+                          "Status: " + widget.status,
+                          style: TextStyle(
+                            color: black.withOpacity(0.7),
+                            fontSize: 17,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
             Padding(

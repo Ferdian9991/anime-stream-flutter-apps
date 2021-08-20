@@ -35,7 +35,7 @@ Future actionGenre() async {
 }
 
 final String romance =
-    "https://anime.rifkiystark.tech/api/genres/action/page/1";
+    "https://anime.rifkiystark.tech/api/genres/romance/page/1";
 
 Future romanceGenre() async {
   var response = await http.get(Uri.parse(romance));

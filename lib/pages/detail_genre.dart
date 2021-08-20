@@ -25,15 +25,11 @@ class _DetailGenrePageState extends State<DetailGenre> {
     super.initState();
     animeByGenre();
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
+      if (scrollController.position.pixels >=
           scrollController.position.maxScrollExtent) {
         animeByGenre();
         setState(() {
           page = currentPage++;
-        });
-      } else {
-        setState(() {
-          page = currentPage;
         });
       }
     });
@@ -117,10 +113,9 @@ class _DetailGenrePageState extends State<DetailGenre> {
         child: GridView.builder(
             controller: scrollController,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: 50 / 60,
-              mainAxisSpacing: 30,
+              childAspectRatio: 65 / 78,
+              mainAxisSpacing: 25,
               crossAxisCount: counter,
-              crossAxisSpacing: 10,
             ),
             padding: EdgeInsets.only(top: 20, left: 0, right: 0),
             itemCount: _nime.length,
