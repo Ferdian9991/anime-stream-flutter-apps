@@ -128,6 +128,7 @@ class _DetailGenrePageState extends State<DetailGenre> {
               padding: const EdgeInsets.only(right: 5, left: 5),
               child: GridView.builder(
                   shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     childAspectRatio: 65 / 78,
                     mainAxisSpacing: 25,
@@ -212,7 +213,9 @@ class _DetailGenrePageState extends State<DetailGenre> {
                     );
                   }),
             ),
-            Center(child: lazyLoad()),
+            Center(
+              child: lazyLoad(),
+            ),
           ],
         ),
       ),
