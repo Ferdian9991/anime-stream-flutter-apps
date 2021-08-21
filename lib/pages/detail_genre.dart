@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_ui/base_config.dart';
@@ -20,18 +20,22 @@ class _DetailGenrePageState extends State<DetailGenre> {
   ScrollController scrollController = ScrollController();
   int currentPage = 2;
   int page = 1;
+  bool scrollCheck = false;
   @override
   void initState() {
     super.initState();
     animeByGenre();
     scrollController.addListener(() {
-      if (scrollController.position.pixels >=
+      if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
+        scrollCheck = true;
         lazyLoad();
-        animeByGenre();
-        setState(() {
-          page = currentPage++;
-        });
+        if (scrollCheck == true) {
+          animeByGenre();
+          setState(() {
+            page = currentPage++;
+          });
+        }
       }
     });
   }
@@ -65,13 +69,20 @@ class _DetailGenrePageState extends State<DetailGenre> {
           BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(15))),
       height: 50,
       child: Center(
-        child: CupertinoActivityIndicator(),
+        child: LoadingIndicator(
+          indicatorType: Indicator.ballPulseSync,
+          colors: const [Colors.red, Colors.yellow, Colors.blue],
+          strokeWidth: 5,
+          backgroundColor: Colors.white,
+          pathBackgroundColor: Colors.white,
+        ),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    print(page);
     var length = widget.genre.toUpperCase().length;
     var capitalize = widget.genre.toUpperCase().substring(0, 1);
     var titleLower = widget.genre.substring(1, length);
