@@ -27,6 +27,7 @@ class _DetailGenrePageState extends State<DetailGenre> {
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
           scrollController.position.maxScrollExtent) {
+        lazyLoad();
         animeByGenre();
         setState(() {
           page = currentPage++;
@@ -56,6 +57,17 @@ class _DetailGenrePageState extends State<DetailGenre> {
         }
       });
     }
+  }
+
+  lazyLoad() {
+    return Container(
+      decoration:
+          BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(15))),
+      height: 50,
+      child: Center(
+        child: CupertinoActivityIndicator(),
+      ),
+    );
   }
 
   @override
@@ -108,92 +120,101 @@ class _DetailGenrePageState extends State<DetailGenre> {
       ),
       backgroundColor: secondaryColor,
       extendBodyBehindAppBar: false,
-      body: Padding(
-        padding: const EdgeInsets.only(right: 5, left: 5),
-        child: GridView.builder(
-            controller: scrollController,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: 65 / 78,
-              mainAxisSpacing: 25,
-              crossAxisCount: counter,
-            ),
-            padding: EdgeInsets.only(top: 20, left: 0, right: 0),
-            itemCount: _nime.length,
-            itemBuilder: (context, index) {
-              var length = _nime[index].id.length;
-              var endpoint = _nime[index].id.substring(28, length);
-              return Padding(
-                padding: const EdgeInsets.only(
-                  left: 5,
-                  right: 5,
-                ),
-                child: Stack(
-                  children: <Widget>[
-                    Hero(
-                        tag: _nime[index].name,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DetailMoviePage(endpoint),
-                              ),
-                            );
-                          },
-                          child: GridTile(
-                            footer: ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(15),
-                                bottomRight: Radius.circular(15),
-                              ),
-                              child: Container(
-                                color: Colors.black54,
-                                child: ListTile(
-                                  title: Text(
-                                    _nime[index].name,
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.clip,
+      body: SingleChildScrollView(
+        controller: scrollController,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 5, left: 5),
+              child: GridView.builder(
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    childAspectRatio: 65 / 78,
+                    mainAxisSpacing: 25,
+                    crossAxisCount: counter,
+                  ),
+                  padding: EdgeInsets.only(top: 20, left: 0, right: 0),
+                  itemCount: _nime.length,
+                  itemBuilder: (context, index) {
+                    var length = _nime[index].id.length;
+                    var endpoint = _nime[index].id.substring(28, length);
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        left: 5,
+                        right: 5,
+                      ),
+                      child: Stack(
+                        children: <Widget>[
+                          Hero(
+                              tag: _nime[index].name,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          DetailMoviePage(endpoint),
+                                    ),
+                                  );
+                                },
+                                child: GridTile(
+                                  footer: ClipRRect(
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(15),
+                                      bottomRight: Radius.circular(15),
+                                    ),
+                                    child: Container(
+                                      color: Colors.black54,
+                                      child: ListTile(
+                                        title: Text(
+                                          _nime[index].name,
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(15),
+                                    ),
+                                    child: Image.network(
+                                      _nime[index].thumb,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
+                              )),
+                          Container(
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                                color: Colors.red[600],
+                                borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(20),
+                                  topLeft: Radius.circular(15),
+                                )),
+                            child: Text(
+                              _nime[index].score.toString(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
                               ),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(15),
-                              ),
-                              child: Image.network(
-                                _nime[index].thumb,
-                                fit: BoxFit.cover,
-                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.clip,
                             ),
                           ),
-                        )),
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          color: Colors.red[600],
-                          borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(20),
-                            topLeft: Radius.circular(15),
-                          )),
-                      child: Text(
-                        _nime[index].score.toString(),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.clip,
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-              );
-            }),
+                    );
+                  }),
+            ),
+            Center(child: lazyLoad()),
+          ],
+        ),
       ),
     );
   }
