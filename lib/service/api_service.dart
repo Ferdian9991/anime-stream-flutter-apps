@@ -26,7 +26,8 @@ Future fantasyGenre() async {
   return value['animeList'];
 }
 
-final String action = "https://anime.rifkiystark.tech/api/genres/action/page/1";
+final String action =
+    "https://anime.rifkiystark.tech/api/genres/samurai/page/1";
 
 Future actionGenre() async {
   var response = await http.get(Uri.parse(action));
@@ -49,12 +50,4 @@ Future genreAnime() async {
   var response = await http.get(Uri.parse(genres));
   var value = json.decode(response.body);
   return value['genreList'];
-}
-
-final String schedules = "https://anime.rifkiystark.tech/api/schedule";
-
-Future getSchehule() async {
-  var response = await http.get(Uri.parse(schedules));
-  var value = json.decode(response.body);
-  return value['scheduleList'];
 }

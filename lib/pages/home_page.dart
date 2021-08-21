@@ -381,7 +381,7 @@ class _HomeState extends State<HomeView> {
           Padding(
             padding: const EdgeInsets.only(top: 15),
             child: Text(
-              "Aksi",
+              "Samurai",
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 20,
@@ -698,7 +698,7 @@ class DataSearch extends SearchDelegate<String> {
                       right: 5,
                     ),
                     child: Hero(
-                        tag: snapshot.data[index]['title'],
+                        tag: "Search",
                         child: InkWell(
                           onTap: () {
                             Navigator.push(
