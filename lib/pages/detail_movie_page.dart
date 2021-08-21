@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:movie_ui/service/api_service.dart';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:movie_ui/base_config.dart';
 import 'package:movie_ui/pages/anime_player.dart';
@@ -23,6 +23,18 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
       var response = await http.get(Uri.parse(url));
       var value = json.decode(response.body);
       return value;
+    }
+
+    Future actionRand() async {
+      var rand = new Random();
+      var randValue = rand.nextInt(20);
+
+      final String action =
+          "https://anime.rifkiystark.tech/api/genres/action/page/" +
+              randValue.toString();
+      var response = await http.get(Uri.parse(action));
+      var value = json.decode(response.body);
+      return value['animeList'];
     }
 
     getAnimeDetails();
@@ -68,8 +80,6 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
             if (score == null) {
               score = 0;
             }
-            var epsLength = snapshot.data['episode_list'];
-            int nums = epsLength.length;
             var genres = genre.map((item) => item['genre_name']).join(", ");
             return SingleChildScrollView(
               child: Column(
@@ -175,6 +185,8 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                                       color: black.withOpacity(0.7),
                                       fontSize: 15,
                                     ),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.clip,
                                   ),
                                   SizedBox(height: 2),
                                   Row(
@@ -231,10 +243,16 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                               // var endpoint = snapshot.data[index]['id']
                               //     .substring(0, length - 1);
                               var episodeList = snapshot.data['episode_list'];
-                              var eps_num = nums--;
                               var checker = episodeList[index]['title']
                                   .contains("Episode");
                               if (checker == true) {
+                                var epsTitle =
+                                    episodeList[index]['title'].substring(
+                                  episodeList[index]['title']
+                                      .indexOf("Episode"),
+                                  episodeList[index]['title']
+                                      .indexOf("Subtitle"),
+                                );
                                 return GestureDetector(
                                   onTap: () {
                                     final String endpoint = snapshot
@@ -267,6 +285,7 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                                                   score: rate.toString(),
                                                   status: status,
                                                   studio: studio,
+                                                  list: episodeList,
                                                 );
                                               } else {
                                                 return Center(
@@ -284,14 +303,15 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                                     padding: EdgeInsets.all(10),
                                     margin: EdgeInsets.only(right: 7),
                                     decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.black),
+                                        color: Colors.red[600],
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(25))),
                                     child: Text(
-                                      "Episode " + eps_num.toString(),
+                                      epsTitle,
                                       style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                      ),
                                     ),
                                   ),
                                 );
@@ -408,7 +428,7 @@ class _DetailMoviePageState extends State<DetailMoviePage> {
                     ),
                   ),
                   FutureBuilder(
-                    future: actionGenre(),
+                    future: actionRand(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return Container(
